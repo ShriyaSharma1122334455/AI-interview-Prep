@@ -49,7 +49,7 @@ export async function signIn(params: SignInParams) {
             };
         }
 
-        // await setSessionCookie(idToken);
+        await setSessionCookie(idToken);
         
 
 
@@ -60,4 +60,17 @@ export async function signIn(params: SignInParams) {
             message: 'Failed to sign in'}
 
     }
+}
+
+export async function setSessionCookie(idToken: string){
+    const One_Week = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds 
+    const cookieStore = await cookies();
+    const sessionCookie = await auth.createSessionCookie(idToken, {
+        expiresIn: One_Week,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        path : '/',
+        sameSite: 'Lax',
+    }as any); // 5 days
+    
 }
