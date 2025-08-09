@@ -17,7 +17,7 @@ import {
 import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
-import { signUp } from "@/lib/actions/auth.action";
+import { signIn, signUp } from "@/lib/actions/auth.action";
 import FormField from "./FormField";
 
 // Define the FormType
@@ -75,6 +75,23 @@ const Authform = ({ type }: { type: FormType }) => {
         toast.success("Account created successfully!. Please sign in.");
         router.push("/sign-in");
       } else {
+        const { email, password } = values;
+        const userCredentials = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+
+        const idToken = await userCredentials.user.getIdToken();
+
+        if (!idToken) {
+          toast.error("Sign in failed");
+          return;
+        }
+        await signIn({
+          email,
+          idToken,
+        });
         toast.success("Sign in successful!");
         router.push("/");
       }
