@@ -37,3 +37,27 @@ export async function signUp(params:SignUpParams) {
 
 }
 
+export async function signIn(params: SignInParams) {
+    const { email, idToken } = params;
+
+    try {
+        const userRecord = await auth.getUserByEmail(email)
+        if (!userRecord) {
+            return {
+                success: false,
+                message: 'User not found. Please sign up first.'
+            };
+        }
+
+        // await setSessionCookie(idToken);
+        
+
+
+    } catch (e: any){
+        console.log(e);
+        return {
+            success: false,
+            message: 'Failed to sign in'}
+
+    }
+}
