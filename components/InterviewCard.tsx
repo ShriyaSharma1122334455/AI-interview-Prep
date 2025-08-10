@@ -1,9 +1,9 @@
-import React from "react";
-import dayjs from "dayjs";
-import Image from "next/image";
-import { getRandomInterviewCover } from "@/lib/utils";
-import Link from "next/link";
-import DisplayTechIcons from "./DisplayTechIcons";
+import React from 'react';
+import dayjs from 'dayjs';
+import Image from 'next/image';
+import { getRandomInterviewCover } from '@/lib/utils';
+import Link from 'next/link';
+import DisplayTechIcons from './DisplayTechIcons';
 
 const InterviewCard = ({
   invertviewID,
@@ -14,10 +14,10 @@ const InterviewCard = ({
   createdAt,
 }: InterviewCardProps) => {
   const feedback = null as Feedback | null;
-  const normalizedType = /mix/gi.test(type) ? "Mixed" : type;
+  const normalizedType = /mix/gi.test(type) ? 'Mixed' : type;
   const formattedDate = dayjs(
     feedback?.createdAt || createdAt || Date.now()
-  ).format("MMM D, YYYY");
+  ).format('MMM D, YYYY');
 
   return (
     <div className="card-border w-[360px] max-sm:w-full min-h-96">
@@ -35,9 +35,9 @@ const InterviewCard = ({
           ></Image>
           <h3 className="mt-5 captalize">{role} Interview</h3>
           <div className="flex flex-row gap-5 mt-3">
-            {" "}
+            {' '}
             <div className="flex flex-row gap-2">
-              {" "}
+              {' '}
               <Image
                 src="/calendar.svg"
                 alt="calendar"
@@ -48,12 +48,12 @@ const InterviewCard = ({
             </div>
             <div className="flex flex-row gap-2">
               <Image src="/star.svg" alt="star" width={22} height={22}></Image>
-              <p>{feedback?.totalScore || "---"}/100</p>
+              <p>{feedback?.totalScore || '---'}/100</p>
             </div>
           </div>
           <p className="line-clamp-2 mt-5">
             {feedback?.finalAssessment ||
-              "No feedback yet. Please take the interview and improve yourself"}
+              'No feedback yet. Please take the interview and improve yourself'}
           </p>
         </div>
         <div className="flex flex-row justify-between">
@@ -62,11 +62,11 @@ const InterviewCard = ({
             <Link
               href={
                 feedback
-                  ? "/interview/${interviewID}/feedback"
-                  : "/interview/${invertviewID}"
+                  ? '/interview/${interviewID}/feedback'
+                  : '/interview/${invertviewID}'
               }
             >
-              {feedback ? "View Feedback" : "View Interview"}
+              {feedback ? 'View Feedback' : 'View Interview'}
             </Link>
           </button>
         </div>

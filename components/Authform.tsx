@@ -1,39 +1,39 @@
-"use client";
+'use client';
 
-import { z } from "zod";
-import Link from "next/link";
-import Image from "next/image";
-import { toast } from "sonner";
-import { auth } from "@/firebase/client";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from 'zod';
+import Link from 'next/link';
+import Image from 'next/image';
+import { toast } from 'sonner';
+import { auth } from '@/firebase/client';
+import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-} from "firebase/auth";
+} from 'firebase/auth';
 
-import { Form } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
+import { Form } from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
 
-import { signIn, signUp } from "@/lib/actions/auth.action";
-import FormField from "./FormField";
+import { signIn, signUp } from '@/lib/actions/auth.action';
+import FormField from './FormField';
 
 // Define the FormType
-type FormType = "sign-in" | "sign-up";
+type FormType = 'sign-in' | 'sign-up';
 
 const authFormSchema = (type: FormType) => {
   return z.object({
     name:
-      type === "sign-up"
-        ? z.string().min(3, "Name is required")
+      type === 'sign-up'
+        ? z.string().min(3, 'Name is required')
         : z.string().optional(),
-    email: z.string().email("Invalid email address"),
+    email: z.string().email('Invalid email address'),
     password: z
       .string()
-      .min(8, "Password must be at least 8 characters")
-      .max(32, "Password must be at most 32 characters"),
+      .min(8, 'Password must be at least 8 characters')
+      .max(32, 'Password must be at most 32 characters'),
   });
 };
 
@@ -43,16 +43,16 @@ const Authform = ({ type }: { type: FormType }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      email: "",
-      password: "",
+      name: '',
+      email: '',
+      password: '',
     },
   });
 
   // 2. Define a submit handler.
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      if (type === "sign-up") {
+      if (type === 'sign-up') {
         const { name, email, password } = data;
 
         const userCredentials = await createUserWithEmailAndPassword(
@@ -72,8 +72,8 @@ const Authform = ({ type }: { type: FormType }) => {
           toast.error(result.message);
           return;
         }
-        toast.success("Account created successfully!. Please sign in.");
-        router.push("/sign-in");
+        toast.success('Account created successfully!. Please sign in.');
+        router.push('/sign-in');
       } else {
         const { email, password } = data;
         const userCredentials = await signInWithEmailAndPassword(
@@ -85,7 +85,7 @@ const Authform = ({ type }: { type: FormType }) => {
         const idToken = await userCredentials.user.getIdToken();
 
         if (!idToken) {
-          toast.error("Sign in failed");
+          toast.error('Sign in failed');
           return;
         }
         await signIn({
@@ -96,8 +96,8 @@ const Authform = ({ type }: { type: FormType }) => {
         //   success: true,
         //   message: "Account created successfully! Login now",
         // };
-        toast.success("Sign in successful!");
-        router.push("/");
+        toast.success('Sign in successful!');
+        router.push('/');
       }
     } catch (error) {
       console.log(error);
@@ -105,7 +105,7 @@ const Authform = ({ type }: { type: FormType }) => {
     }
   };
 
-  const isSignIn = type === "sign-in";
+  const isSignIn = type === 'sign-in';
 
   return (
     <div className="card-border lg:min-w-[566px]">
@@ -146,17 +146,17 @@ const Authform = ({ type }: { type: FormType }) => {
             />
 
             <Button className="btn" type="submit">
-              {isSignIn ? "Sign in" : "Create An Account"}
+              {isSignIn ? 'Sign in' : 'Create An Account'}
             </Button>
           </form>
 
           <p className="text-center">
-            {isSignIn ? "No account? " : "Already have an account? "}
+            {isSignIn ? 'No account? ' : 'Already have an account? '}
             <Link
-              href={!isSignIn ? "/sign-in" : "/sign-up"}
+              href={!isSignIn ? '/sign-in' : '/sign-up'}
               className="text-user-primary ml-1"
             >
-              {isSignIn ? "Create an account" : "Sign in"}
+              {isSignIn ? 'Create an account' : 'Sign in'}
             </Link>
           </p>
         </Form>
