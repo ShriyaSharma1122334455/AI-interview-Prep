@@ -1,16 +1,16 @@
-import type { Metadata } from "next";
-import { Mona_Sans } from "next/font/google";
-import "./globals.css";
-import { Toaster } from "sonner";
+import type { Metadata } from 'next';
+import { Mona_Sans } from 'next/font/google';
+import './globals.css';
+import { Toaster } from 'sonner';
 
 const monaSans = Mona_Sans({
-  variable: "--font-mona-sans",
-  subsets: ["latin"],
+  variable: '--font-mona-sans',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: "Interview Prep",
-  description: "Ai Powered Interview Preparation Tool",
+  title: 'Interview Prep',
+  description: 'Ai Powered Interview Preparation Tool',
 };
 
 export default function RootLayout({
