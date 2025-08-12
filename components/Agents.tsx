@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import React from 'react';
 
@@ -11,6 +12,11 @@ enum CallStatus {
 const Agents = ({ userName }: AgentProps) => {
   const callStatus = CallStatus.FINISHED;
   const isSpeaking = true;
+  const message = [
+    'What is your name?',
+    'My name is John Doe, nice to meet you.',
+  ];
+  const lastMessage = message[message.length -1]
 
   return (
     <>
@@ -41,6 +47,13 @@ const Agents = ({ userName }: AgentProps) => {
           </div>
         </div>
       </div>
+
+      {message.length > 0 && (
+        <div className='transcript-border'>
+            <div className='transcript'>
+                <p key ={lastMessage} className={cn('transition-opacity duration-500 opacity-0', 'animate-fadeIn opacity-100')}>{lastMessage}</p>
+                </div> </div>
+      )}
 
       <div className="w-full flex justify-center">
         {callStatus !== CallStatus.ACTIVE ? (
