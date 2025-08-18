@@ -16,7 +16,7 @@ const Agents = ({ userName }: AgentProps) => {
     'What is your name?',
     'My name is John Doe, nice to meet you.',
   ];
-  const lastMessage = message[message.length -1]
+  const lastMessage = message[message.length - 1];
 
   return (
     <>
@@ -49,18 +49,33 @@ const Agents = ({ userName }: AgentProps) => {
       </div>
 
       {message.length > 0 && (
-        <div className='transcript-border'>
-            <div className='transcript'>
-                <p key ={lastMessage} className={cn('transition-opacity duration-500 opacity-0', 'animate-fadeIn opacity-100')}>{lastMessage}</p>
-                </div> </div>
+        <div className="transcript-border">
+          <div className="transcript">
+            <p
+              key={lastMessage}
+              className={cn(
+                'transition-opacity duration-500 opacity-0',
+                'animate-fadeIn opacity-100'
+              )}
+            >
+              {lastMessage}
+            </p>
+          </div>{' '}
+        </div>
       )}
 
       <div className="w-full flex justify-center">
         {callStatus !== CallStatus.ACTIVE ? (
           <button className="relative btn-call">
-            <span className={cn('absolute animate-ping rounded-full opacity-75', callStatus!== 'CONNECTION' & 'hidden')}
-              {callStatus === CallStatus.INACTIVE ? 'Connect' : '....'} />
-              <span></span>
+            <span
+              className={cn(
+                'absolute animate-ping rounded-full opacity-75',
+                callStatus !== CallStatus.CONNECTING && 'hidden'
+              )}
+            ></span>
+            <span>
+              {callStatus === CallStatus.INACTIVE ? 'Connect' : '....'}
+            </span>
           </button>
         ) : (
           <button className="btn-disconnect">End</button>
